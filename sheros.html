@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JavaScript - read JSON from URL</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+
+  <style type="text/css">
+    .tg {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    .tg td {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      padding: 10px 5px;
+      border-style: solid;
+      border-width: 1px;
+      overflow: hidden;
+      word-break: normal;
+    }
+    .tg th {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      padding: 10px 5px;
+      border-style: solid;
+      border-width: 1px;
+      overflow: hidden;
+      word-break: normal;
+    }
+  </style>
+
+  <body>
+    <span style="font-size: 22px">Deine Spende für den Sheroes Fund</span>
+    <br /><br />
+    <div class="table"></div>
+    <script>
+      $.getJSON("https://api.betterplace.org/de/api_v4/projects/93203", function (data) {
+        var open = (data.open_amount_in_cents / 100).toLocaleString("de");
+        var donated = (data.donated_amount_in_cents / 100).toLocaleString("de");
+        var total = ((data.open_amount_in_cents + data.donated_amount_in_cents) / 100).toLocaleString("de");
+
+        var text = `
+            <table class="tg">
+            <tr><td>Open:</td><td>${open} €</td></tr>
+            <tr><td>Donated:</td><td>${donated} €</td></tr>
+            <tr><td>Total:</td><td>${total} €</td></tr>
+            <tr><td>Update:</td><td>${data.updated_at}</td></tr>
+        `;
+
+        $(".table").html(text);
+      });
+    </script>
+  </body>
+</html>
